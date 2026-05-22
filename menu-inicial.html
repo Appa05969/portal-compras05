@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal de Compras — Menu Inicial</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/menu-inicial.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-left">
+    <div class="header-logo-icon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM4 5h16V4H4v1zm2-3h12V1H6v1zm12 9H6v2h12v-2z"/>
+      </svg>
+    </div>
+    <div>
+      <div class="header-brand">Portal de <span>Compras</span></div>
+    </div>
+    <span class="header-badge">v2.0</span>
+  </div>
+
+  <div class="header-right">
+    <button class="notif-btn" title="Notificações">
+      🔔
+      <span class="notif-dot"></span>
+    </button>
+    <div class="user-pill">
+      <div class="avatar">JM</div>
+      <div>
+        <div class="user-info-name">João Mendes</div>
+        <div class="user-info-role">Solicitante</div>
+      </div>
+      <span class="user-chevron">▾</span>
+    </div>
+  </div>
+</header>
+
+<!-- PAGE -->
+<div class="page">
+
+  <!-- WELCOME BANNER -->
+  <div class="welcome-banner">
+    <div class="welcome-greeting">Bem-vindo de volta,</div>
+    <div class="welcome-name">João Mendes 👋</div>
+    <div class="welcome-sub">Aqui está um resumo das suas atividades. Acesse os módulos abaixo para gerenciar suas solicitações de compra.</div>
+    <div class="welcome-date">
+      <div class="welcome-date-day" id="today-day">—</div>
+      <div class="welcome-date-label" id="today-label">carregando...</div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card green">
+      <div class="stat-label">Solicitações Abertas</div>
+      <div class="stat-value">12</div>
+      <div class="stat-delta up">↑ 3 esta semana</div>
+      <div class="stat-icon">📋</div>
+    </div>
+    <div class="stat-card blue">
+      <div class="stat-label">Em Análise</div>
+      <div class="stat-value">5</div>
+      <div class="stat-delta">Aguardando aprovação</div>
+      <div class="stat-icon">🔍</div>
+    </div>
+    <div class="stat-card orange">
+      <div class="stat-label">Aprovadas (mês)</div>
+      <div class="stat-value">28</div>
+      <div class="stat-delta up">↑ 12% vs mês anterior</div>
+      <div class="stat-icon">✅</div>
+    </div>
+    <div class="stat-card red">
+      <div class="stat-label">Recusadas (mês)</div>
+      <div class="stat-value">3</div>
+      <div class="stat-delta down">↑ 1 vs mês anterior</div>
+      <div class="stat-icon">❌</div>
+    </div>
+  </div>
+
+  <!-- MODULES -->
+  <div class="section-label">Módulos do sistema</div>
+  <div class="modules-grid">
+
+    <a class="module-card c-green" href="Portal%20de%20Pedido%20de%20Compras%20(v24).html">
+      <span class="module-badge new">Novo</span>
+      <div class="module-icon-wrap">🛒</div>
+      <div class="module-title">Nova Solicitação</div>
+      <div class="module-desc">Crie uma nova solicitação de compra selecionando produtos do catálogo.</div>
+      <span class="module-arrow">→</span>
+    </a>
+
+    <a class="module-card c-blue" href="minhas-solicitacoes%20(v1).html">
+      <span class="module-badge pending">5 pendentes</span>
+      <div class="module-icon-wrap">📄</div>
+      <div class="module-title">Minhas Solicitações</div>
+      <div class="module-desc">Acompanhe o status de todas as suas solicitações em andamento.</div>
+      <span class="module-arrow">→</span>
+    </a>
+
+    <a class="module-card c-orange" href="relatorios.html">
+      <div class="module-icon-wrap">📊</div>
+      <div class="module-title">Relatórios</div>
+      <div class="module-desc">Acesse relatórios de solicitações por usuário, destino e período.</div>
+      <span class="module-arrow">→</span>
+    </a>
+
+    <a class="module-card c-gray" href="Portal%20de%20Pedido%20de%20Compras%20(v24).html">
+      <div class="module-icon-wrap">⚙️</div>
+      <div class="module-title">Configurações</div>
+      <div class="module-desc">Gerencie usuários, unidades, produtos e tabelas do sistema.</div>
+      <span class="module-arrow">→</span>
+    </a>
+
+  </div>
+
+  <!-- BOTTOM GRID -->
+  <div class="bottom-grid">
+
+    <!-- RECENT REQUESTS -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">📋 Solicitações Recentes</span>
+        <a class="card-action" href="#">Ver todas →</a>
+      </div>
+      <div class="req-list">
+
+        <div class="req-item">
+          <span class="req-num">#0042</span>
+          <div class="req-info">
+            <div class="req-name">Material de escritório — Papelaria geral</div>
+            <div class="req-meta"><span>Almoxarifado Central</span><span>•</span><span>8 itens</span></div>
+          </div>
+          <span class="req-status em-analise">Em análise</span>
+          <span class="req-date">16/05/2026</span>
+        </div>
+
+        <div class="req-item">
+          <span class="req-num">#0041</span>
+          <div class="req-info">
+            <div class="req-name">Equipamentos de TI — Periféricos e cabos</div>
+            <div class="req-meta"><span>TI / Infraestrutura</span><span>•</span><span>3 itens</span></div>
+          </div>
+          <span class="req-status aprovado">Aprovado</span>
+          <span class="req-date">14/05/2026</span>
+        </div>
+
+        <div class="req-item">
+          <span class="req-num">#0039</span>
+          <div class="req-info">
+            <div class="req-name">Limpeza e higiene — Produtos de copa</div>
+            <div class="req-meta"><span>Serviços Gerais</span><span>•</span><span>12 itens</span></div>
+          </div>
+          <span class="req-status pendente">Pendente</span>
+          <span class="req-date">12/05/2026</span>
+        </div>
+
+        <div class="req-item">
+          <span class="req-num">#0037</span>
+          <div class="req-info">
+            <div class="req-name">Manutenção predial — Ferramentas diversas</div>
+            <div class="req-meta"><span>Manutenção</span><span>•</span><span>6 itens</span></div>
+          </div>
+          <span class="req-status recusado">Recusado</span>
+          <span class="req-date">08/05/2026</span>
+        </div>
+
+        <div class="req-item">
+          <span class="req-num">#0035</span>
+          <div class="req-info">
+            <div class="req-name">Segurança do trabalho — EPIs mensais</div>
+            <div class="req-meta"><span>RH / Segurança</span><span>•</span><span>9 itens</span></div>
+          </div>
+          <span class="req-status aprovado">Aprovado</span>
+          <span class="req-date">05/05/2026</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- QUICK ACTIONS -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">⚡ Ações Rápidas</span>
+      </div>
+      <div class="quick-list">
+
+        <div class="quick-item" onclick="window.location.href='portal.html'">
+          <div class="quick-item-icon green">🛒</div>
+          <div class="quick-item-text">
+            <div class="quick-item-title">Nova Solicitação</div>
+            <div class="quick-item-sub">Abrir formulário de compra</div>
+          </div>
+          <span class="quick-item-chevron">›</span>
+        </div>
+
+        <div class="quick-item" onclick="window.location.href='minhas-solicitacoes.html'">
+          <div class="quick-item-icon blue">🔍</div>
+          <div class="quick-item-text">
+            <div class="quick-item-title">Consultar Solicitação</div>
+            <div class="quick-item-sub">Buscar por número ou status</div>
+          </div>
+          <span class="quick-item-chevron">›</span>
+        </div>
+
+        <div class="quick-item" onclick="window.location.href='relatorios.html'">
+          <div class="quick-item-icon orange">📊</div>
+          <div class="quick-item-text">
+            <div class="quick-item-title">Gerar Relatório</div>
+            <div class="quick-item-sub">Exportar dados do período</div>
+          </div>
+          <span class="quick-item-chevron">›</span>
+        </div>
+
+        <div class="quick-item" onclick="window.location.href='portal.html'">
+          <div class="quick-item-icon green">📦</div>
+          <div class="quick-item-text">
+            <div class="quick-item-title">Catálogo de Produtos</div>
+            <div class="quick-item-sub">Visualizar itens disponíveis</div>
+          </div>
+          <span class="quick-item-chevron">›</span>
+        </div>
+
+        <div class="quick-item" onclick="window.location.href='portal.html'">
+          <div class="quick-item-icon blue">👥</div>
+          <div class="quick-item-text">
+            <div class="quick-item-title">Gerenciar Usuários</div>
+            <div class="quick-item-sub">Cadastros e permissões</div>
+          </div>
+          <span class="quick-item-chevron">›</span>
+        </div>
+
+        <div class="quick-item" onclick="window.location.href='login.html'">
+          <div class="quick-item-icon red">🚪</div>
+          <div class="quick-item-text">
+            <div class="quick-item-title">Sair do Sistema</div>
+            <div class="quick-item-sub">Encerrar sessão atual</div>
+          </div>
+          <span class="quick-item-chevron">›</span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    Portal de Solicitação de Compras &nbsp;·&nbsp; v2.0.0 &nbsp;·&nbsp;
+    Suporte: <a href="#">ti@suaempresa.com.br</a>
+  </div>
+
+</div>
+
+
+<script src="js/menu-inicial.js"></script>
+</body>
+</html>

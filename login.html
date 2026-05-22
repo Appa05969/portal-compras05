@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal de Compras — Acesso</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+
+<!-- LEFT PANEL -->
+<div class="left-panel">
+  <div class="deco-ring deco-ring-1"></div>
+  <div class="deco-ring deco-ring-2"></div>
+
+  <div class="left-logo">
+    <div class="left-logo-icon">🛒</div>
+    <div class="left-logo-text">
+      Portal de Compras
+      <small>Solicitação &amp; Gestão</small>
+    </div>
+  </div>
+
+  <div class="left-middle">
+    <div class="left-headline">Gerencie suas compras com eficiência</div>
+    <div class="left-sub">
+      Plataforma centralizada para solicitar, acompanhar e aprovar pedidos de compra de forma simples e rastreável.
+    </div>
+    <ul class="feature-list">
+      <li>Catálogo completo de produtos</li>
+      <li>Aprovações com rastreabilidade</li>
+      <li>Relatórios e histórico detalhado</li>
+      <li>Controle por unidades e destinos</li>
+    </ul>
+  </div>
+
+  <div class="left-footer">
+    © 2026 Sua Empresa S.A. &nbsp;·&nbsp; Todos os direitos reservados<br>
+    Acesso restrito a colaboradores autorizados.
+  </div>
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="right-panel">
+  <div class="login-box">
+
+    <!-- FORM STATE -->
+    <div id="form-state">
+      <div class="login-title">Bem-vindo! 👋</div>
+      <div class="login-subtitle">Informe suas credenciais de acesso para entrar no sistema.</div>
+
+      <!-- ── MICROSOFT 365 LOGIN ── -->
+      <div class="config-badge" id="config-badge">
+        ⚙️&nbsp; <span>Autenticação Microsoft ainda não configurada.
+        Adicione o <strong>Client ID</strong> e <strong>Tenant ID</strong> no script.
+        <a href="https://portal.azure.com" target="_blank" rel="noopener">Abrir Azure Portal →</a></span>
+      </div>
+
+      <button class="btn-microsoft" id="btn-microsoft" type="button" onclick="loginMicrosoft()">
+        <svg class="ms-logo" width="20" height="20" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1"  y="1"  width="9" height="9" fill="#f25022"/>
+          <rect x="11" y="1"  width="9" height="9" fill="#7fba00"/>
+          <rect x="1"  y="11" width="9" height="9" fill="#00a4ef"/>
+          <rect x="11" y="11" width="9" height="9" fill="#ffb900"/>
+        </svg>
+        <div class="ms-spinner"></div>
+        <span class="ms-label">Entrar com conta Microsoft</span>
+      </button>
+
+      <div class="divider-or">ou acesse com e-mail e senha</div>
+
+
+
+      <!-- ERROR MSG -->
+      <div class="error-msg" id="error-msg">
+        <span>⚠️</span>
+        <span id="error-text">E-mail ou senha inválidos. Tente novamente.</span>
+      </div>
+
+      <!-- EMAIL -->
+      <div class="form-group">
+        <label class="form-label" for="email">E-mail corporativo</label>
+        <div class="input-wrap">
+          <span class="input-icon">✉️</span>
+          <input class="form-input" id="email" type="email"
+                 placeholder="seu.nome@empresa.com.br"
+                 autocomplete="email" />
+        </div>
+      </div>
+
+      <!-- PASSWORD -->
+      <div class="form-group">
+        <label class="form-label" for="senha">Senha</label>
+        <div class="input-wrap">
+          <span class="input-icon">🔒</span>
+          <input class="form-input" id="senha" type="password"
+                 placeholder="••••••••"
+                 autocomplete="current-password" />
+          <button class="pw-toggle" type="button" id="pw-toggle" title="Mostrar/ocultar senha">👁</button>
+        </div>
+      </div>
+
+      <!-- OPTIONS -->
+      <div class="form-options">
+        <label class="checkbox-wrap">
+          <input type="checkbox" id="remember" />
+          <span class="checkbox-label">Lembrar acesso</span>
+        </label>
+        <a class="forgot-link" href="#">Esqueci minha senha</a>
+      </div>
+
+      <!-- SUBMIT -->
+      <button class="btn-submit" id="btn-submit" type="button" onclick="handleLogin()">
+        <span class="btn-label">Entrar no sistema</span>
+        <span class="spinner"></span>
+      </button>
+
+      <div class="divider">SUPORTE</div>
+
+      <!-- SUPPORT NOTE -->
+      <div class="support-note">
+        <span class="support-note-icon">ℹ️</span>
+        <div>
+          <strong>Primeiro acesso ou senha bloqueada?</strong>
+          Entre em contato com a equipe de TI pelo e-mail
+          <a href="mailto:ti@empresa.com.br">ti@empresa.com.br</a>
+          ou ramal <strong>1234</strong>.
+        </div>
+      </div>
+    </div>
+
+    <!-- SUCCESS STATE -->
+    <div class="success-msg" id="success-state">
+      <div class="success-icon">✅</div>
+      <div class="success-title">Acesso autorizado!</div>
+      <div class="success-sub">
+        Olá, <strong id="user-name-ok">João Mendes</strong>! Seu login foi realizado com sucesso.<br>
+        Você será redirecionado ao menu principal.
+      </div>
+      <div id="auth-provider-badge"></div>
+      <button class="btn-go" onclick="window.location.href='menu-inicial.html'">
+        Ir para o Portal →
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Microsoft MSAL library -->
+<script src="https://alcdn.msauth.net/browser/2.38.3/js/msal-browser.min.js"></script>
+<script src="js/login.js"></script>
+</body>
+</html>

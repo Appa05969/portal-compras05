@@ -1,0 +1,15 @@
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/settings.json
+*.swp
+*.swo
+
+# Dependências (se usar npm futuramente)
+node_modules/
+
+# Arquivos de build / temporários
+dist/
+*.log

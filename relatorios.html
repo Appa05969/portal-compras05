@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal de Compras — Relatórios</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link rel="stylesheet" href="css/relatorios.css">
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="logo-icon">📊</div>
+    <div>
+      <div class="brand">Portal de <span>Compras</span></div>
+    </div>
+    <span class="hbadge">v2.0</span>
+    <span class="hbadge2">Relatórios</span>
+  </div>
+  <div class="header-right">
+    <button class="back-btn" onclick="window.location.href='menu-inicial.html'">← Menu Principal</button>
+    <div class="user-pill">
+      <div class="avatar">JM</div>
+      <div>
+        <div class="uname">João Mendes</div>
+        <div class="urole">Administrador</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sb-section">Período</div>
+  <div class="filter-block">
+    <label class="filter-label">De</label>
+    <div class="filter-row">
+      <input class="filter-input" type="date" id="f-de" value="2026-01-01">
+      <input class="filter-input" type="date" id="f-ate" value="2026-05-31">
+    </div>
+    <label class="filter-label">Unidade</label>
+    <select class="filter-select" id="f-unid" style="margin-bottom:8px">
+      <option value="">Todas</option>
+    </select>
+    <label class="filter-label">Destino</label>
+    <select class="filter-select" id="f-dest" style="margin-bottom:8px">
+      <option value="">Todos</option>
+    </select>
+    <label class="filter-label">Comprador</label>
+    <select class="filter-select" id="f-comp" style="margin-bottom:8px">
+      <option value="">Todos</option>
+    </select>
+    <label class="filter-label">Status</label>
+    <select class="filter-select" id="f-status" style="margin-bottom:10px">
+      <option value="">Todos</option>
+      <option>Pendente</option>
+      <option>Em análise</option>
+      <option>Aprovado</option>
+      <option>Recusado</option>
+    </select>
+    <button class="btn-apply" onclick="applyFilters()">Aplicar Filtros</button>
+    <button class="btn-clear" onclick="clearFilters()">Limpar</button>
+  </div>
+
+  <div class="sb-divider"></div>
+  <div class="sb-section">Relatórios</div>
+
+  <div class="rep-item active" id="nav-dashboard" onclick="showView('dashboard')">
+    <span class="rep-icon">🏠</span> Dashboard Geral
+  </div>
+  <div class="rep-item" id="nav-usuarios" onclick="showView('usuarios')">
+    <span class="rep-icon">👥</span> Usuários
+  </div>
+  <div class="rep-item" id="nav-unidades" onclick="showView('unidades')">
+    <span class="rep-icon">🏢</span> Unidades
+  </div>
+  <div class="rep-item" id="nav-destino" onclick="showView('destino')">
+    <span class="rep-icon">📍</span> Destino de Solicitação
+  </div>
+  <div class="rep-item" id="nav-por-usuario" onclick="showView('por-usuario')">
+    <span class="rep-icon">📋</span> Lanç. por Usuário
+  </div>
+  <div class="rep-item" id="nav-por-destino" onclick="showView('por-destino')">
+    <span class="rep-icon">📌</span> Lanç. por Destino
+  </div>
+  <div class="rep-item" id="nav-prod-destino" onclick="showView('prod-destino')">
+    <span class="rep-icon">🔀</span> Produto × Destino
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main" id="main-area">
+
+  <!-- ─── DASHBOARD ─────────────────────────────────── -->
+  <div class="view-section active" id="view-dashboard">
+
+    <div class="kpi-row" id="kpi-row"></div>
+
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-title">📊 Solicitações por Status</div>
+        <div class="chart-wrap"><canvas id="chart-status"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">📅 Evolução Mensal</div>
+        <div class="chart-wrap"><canvas id="chart-mensal"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">🏢 Top Unidades Solicitantes</div>
+        <div class="chart-wrap"><canvas id="chart-unidades"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">📦 Solicitações por Categoria</div>
+        <div class="chart-wrap"><canvas id="chart-categorias"></canvas></div>
+      </div>
+      <div class="chart-card full">
+        <div class="chart-title">📍 Top Destinos</div>
+        <div class="chart-wrap tall"><canvas id="chart-destinos"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── USUÁRIOS ──────────────────────────────────── -->
+  <div class="view-section" id="view-usuarios">
+    <div class="sec-header">
+      <div class="sec-title">👥 Relatório — Usuários</div>
+      <div class="sec-actions">
+        <span class="rec-count" id="cnt-usuarios">0 registros</span>
+        <button class="btn-export excel" onclick="exportExcel('usuarios')">📥 Excel</button>
+        <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
+      </div>
+    </div>
+    <div class="table-card">
+      <div class="table-toolbar">
+        <input class="tbl-search" placeholder="Buscar usuário..." oninput="tblSearch('tbl-usuarios',this.value)">
+      </div>
+      <div class="tbl-wrap"><table id="tbl-usuarios">
+        <thead><tr>
+          <th onclick="sortTable('tbl-usuarios',0)">ID</th>
+          <th onclick="sortTable('tbl-usuarios',1)">Nome</th>
+          <th onclick="sortTable('tbl-usuarios',2)">E-mail</th>
+          <th onclick="sortTable('tbl-usuarios',3)">Perfil</th>
+          <th onclick="sortTable('tbl-usuarios',4)">Solicitações</th>
+          <th onclick="sortTable('tbl-usuarios',5)">Aprovadas</th>
+          <th onclick="sortTable('tbl-usuarios',6)">Pendentes</th>
+          <th onclick="sortTable('tbl-usuarios',7)">Situação</th>
+        </tr></thead>
+        <tbody id="tbody-usuarios"></tbody>
+      </table></div>
+      <div class="tbl-footer"><span id="foot-usuarios">—</span><div class="page-btns" id="pages-usuarios"></div></div>
+    </div>
+  </div>
+
+  <!-- ─── UNIDADES ──────────────────────────────────── -->
+  <div class="view-section" id="view-unidades">
+    <div class="sec-header">
+      <div class="sec-title">🏢 Relatório — Unidades</div>
+      <div class="sec-actions">
+        <span class="rec-count" id="cnt-unidades">0 registros</span>
+        <button class="btn-export excel" onclick="exportExcel('unidades')">📥 Excel</button>
+        <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
+      </div>
+    </div>
+    <div class="table-card">
+      <div class="table-toolbar">
+        <input class="tbl-search" placeholder="Buscar unidade..." oninput="tblSearch('tbl-unidades',this.value)">
+      </div>
+      <div class="tbl-wrap"><table id="tbl-unidades">
+        <thead><tr>
+          <th onclick="sortTable('tbl-unidades',0)">Código</th>
+          <th onclick="sortTable('tbl-unidades',1)">Nome</th>
+          <th onclick="sortTable('tbl-unidades',2)">Total Solicit.</th>
+          <th onclick="sortTable('tbl-unidades',3)">Aprovadas</th>
+          <th onclick="sortTable('tbl-unidades',4)">Pendentes</th>
+          <th onclick="sortTable('tbl-unidades',5)">Recusadas</th>
+          <th onclick="sortTable('tbl-unidades',6)">Situação</th>
+        </tr></thead>
+        <tbody id="tbody-unidades"></tbody>
+      </table></div>
+      <div class="tbl-footer"><span id="foot-unidades">—</span><div class="page-btns" id="pages-unidades"></div></div>
+    </div>
+  </div>
+
+  <!-- ─── DESTINO ───────────────────────────────────── -->
+  <div class="view-section" id="view-destino">
+    <div class="sec-header">
+      <div class="sec-title">📍 Relatório — Destino de Solicitação</div>
+      <div class="sec-actions">
+        <span class="rec-count" id="cnt-destino">0 registros</span>
+        <button class="btn-export excel" onclick="exportExcel('destino')">📥 Excel</button>
+        <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
+      </div>
+    </div>
+    <div class="table-card">
+      <div class="table-toolbar">
+        <input class="tbl-search" placeholder="Buscar destino..." oninput="tblSearch('tbl-destino',this.value)">
+      </div>
+      <div class="tbl-wrap"><table id="tbl-destino">
+        <thead><tr>
+          <th onclick="sortTable('tbl-destino',0)">Código</th>
+          <th onclick="sortTable('tbl-destino',1)">Destino</th>
+          <th onclick="sortTable('tbl-destino',2)">Total Solicit.</th>
+          <th onclick="sortTable('tbl-destino',3)">Aprovadas</th>
+          <th onclick="sortTable('tbl-destino',4)">Em análise</th>
+          <th onclick="sortTable('tbl-destino',5)">Pendentes</th>
+          <th onclick="sortTable('tbl-destino',6)">Recusadas</th>
+          <th onclick="sortTable('tbl-destino',7)">Situação</th>
+        </tr></thead>
+        <tbody id="tbody-destino"></tbody>
+      </table></div>
+      <div class="tbl-footer"><span id="foot-destino">—</span><div class="page-btns" id="pages-destino"></div></div>
+    </div>
+  </div>
+
+  <!-- ─── LANÇ. POR USUÁRIO ─────────────────────────── -->
+  <div class="view-section" id="view-por-usuario">
+    <div class="sec-header">
+      <div class="sec-title">📋 Lanç. por Usuário</div>
+      <div class="sec-actions">
+        <span class="rec-count" id="cnt-por-usuario">0 registros</span>
+        <button class="btn-export excel" onclick="exportExcel('por-usuario')">📥 Excel</button>
+        <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
+      </div>
+    </div>
+    <div class="table-card">
+      <div class="table-toolbar">
+        <input class="tbl-search" placeholder="Buscar..." oninput="tblSearch('tbl-por-usuario',this.value)">
+      </div>
+      <div class="tbl-wrap"><table id="tbl-por-usuario">
+        <thead><tr>
+          <th onclick="sortTable('tbl-por-usuario',0)">Nº</th>
+          <th onclick="sortTable('tbl-por-usuario',1)">Data</th>
+          <th onclick="sortTable('tbl-por-usuario',2)">Solicitante</th>
+          <th onclick="sortTable('tbl-por-usuario',3)">Unidade</th>
+          <th onclick="sortTable('tbl-por-usuario',4)">Destino</th>
+          <th onclick="sortTable('tbl-por-usuario',5)">Comprador</th>
+          <th onclick="sortTable('tbl-por-usuario',6)">Itens</th>
+          <th onclick="sortTable('tbl-por-usuario',7)">Status</th>
+        </tr></thead>
+        <tbody id="tbody-por-usuario"></tbody>
+      </table></div>
+      <div class="tbl-footer"><span id="foot-por-usuario">—</span><div class="page-btns" id="pages-por-usuario"></div></div>
+    </div>
+  </div>
+
+  <!-- ─── LANÇ. POR DESTINO ─────────────────────────── -->
+  <div class="view-section" id="view-por-destino">
+    <div class="sec-header">
+      <div class="sec-title">📌 Lanç. por Destino</div>
+      <div class="sec-actions">
+        <span class="rec-count" id="cnt-por-destino">0 registros</span>
+        <button class="btn-export excel" onclick="exportExcel('por-destino')">📥 Excel</button>
+        <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
+      </div>
+    </div>
+    <div class="table-card">
+      <div class="table-toolbar">
+        <input class="tbl-search" placeholder="Buscar..." oninput="tblSearch('tbl-por-destino',this.value)">
+      </div>
+      <div class="tbl-wrap"><table id="tbl-por-destino">
+        <thead><tr>
+          <th onclick="sortTable('tbl-por-destino',0)">Nº</th>
+          <th onclick="sortTable('tbl-por-destino',1)">Data</th>
+          <th onclick="sortTable('tbl-por-destino',2)">Destino</th>
+          <th onclick="sortTable('tbl-por-destino',3)">Solicitante</th>
+          <th onclick="sortTable('tbl-por-destino',4)">Unidade</th>
+          <th onclick="sortTable('tbl-por-destino',5)">Comprador</th>
+          <th onclick="sortTable('tbl-por-destino',6)">Itens</th>
+          <th onclick="sortTable('tbl-por-destino',7)">Status</th>
+        </tr></thead>
+        <tbody id="tbody-por-destino"></tbody>
+      </table></div>
+      <div class="tbl-footer"><span id="foot-por-destino">—</span><div class="page-btns" id="pages-por-destino"></div></div>
+    </div>
+  </div>
+
+  <!-- ─── PRODUTO × DESTINO ─────────────────────────── -->
+  <div class="view-section" id="view-prod-destino">
+    <div class="sec-header">
+      <div class="sec-title">🔀 Produto × Destino</div>
+      <div class="sec-actions">
+        <span class="rec-count" id="cnt-prod-destino">0 registros</span>
+        <button class="btn-export excel" onclick="exportExcel('prod-destino')">📥 Excel</button>
+        <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
+      </div>
+    </div>
+    <div class="table-card">
+      <div class="table-toolbar">
+        <input class="tbl-search" placeholder="Buscar produto..." oninput="tblSearch('tbl-prod-destino',this.value)">
+      </div>
+      <div class="tbl-wrap"><table id="tbl-prod-destino">
+        <thead><tr>
+          <th onclick="sortTable('tbl-prod-destino',0)">Código</th>
+          <th onclick="sortTable('tbl-prod-destino',1)">Produto</th>
+          <th onclick="sortTable('tbl-prod-destino',2)">Categoria</th>
+          <th onclick="sortTable('tbl-prod-destino',3)">Unid.</th>
+          <th onclick="sortTable('tbl-prod-destino',4)">Destino</th>
+          <th onclick="sortTable('tbl-prod-destino',5)">Qtd. Total</th>
+          <th onclick="sortTable('tbl-prod-destino',6)">Solicitações</th>
+          <th onclick="sortTable('tbl-prod-destino',7)">Último Lanç.</th>
+        </tr></thead>
+        <tbody id="tbody-prod-destino"></tbody>
+      </table></div>
+      <div class="tbl-footer"><span id="foot-prod-destino">—</span><div class="page-btns" id="pages-prod-destino"></div></div>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<div id="toast"></div>
+
+<script src="js/relatorios.js"></script>
+</body>
+</html>

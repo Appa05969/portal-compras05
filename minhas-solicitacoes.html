@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal de Compras — Minhas Solicitações</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link rel="stylesheet" href="css/minhas-solicitacoes.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-left" onclick="window.location.href='menu-inicial.html'">
+    <div class="logo-icon">🛒</div>
+    <div>
+      <div class="brand">Portal de <span>Compras</span></div>
+    </div>
+    <span class="hbadge">v2.0</span>
+    <span class="hbadge2">Minhas Solicitações</span>
+  </div>
+  <div class="header-right">
+    <button class="btn-nova" onclick="window.location.href='portal.html'">+ Nova Solicitação</button>
+    <button class="hnav" onclick="window.location.href='menu-inicial.html'">🏠 Menu</button>
+    <button class="hnav" onclick="window.location.href='relatorios.html'">📊 Relatórios</button>
+    <button class="hnav danger" onclick="window.location.href='login.html'">Sair ›</button>
+    <div class="user-pill">
+      <div class="avatar">JS</div>
+      <div>
+        <div class="uname">João Silva</div>
+        <div class="urole">Solicitante</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- PAGE -->
+<div class="page">
+
+  <!-- KPI ROW -->
+  <div class="kpi-row" id="kpi-row">
+    <!-- filled by JS -->
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input class="search-input" id="search" placeholder="Buscar por número, destino, produto…" oninput="render()">
+    </div>
+    <select class="filter-chip" id="f-status" onchange="render()">
+      <option value="">Todos os status</option>
+      <option>Pendente</option>
+      <option>Em análise</option>
+      <option>Aprovado</option>
+      <option>Recusado</option>
+      <option>Cancelado</option>
+      <option>Rascunho</option>
+    </select>
+    <select class="filter-chip" id="f-prio" onchange="render()">
+      <option value="">Todas as prioridades</option>
+      <option>Urgente</option>
+      <option>Normal</option>
+      <option>Baixa</option>
+    </select>
+    <select class="filter-chip" id="f-period" onchange="render()">
+      <option value="">Qualquer período</option>
+      <option value="7">Últimos 7 dias</option>
+      <option value="30">Últimos 30 dias</option>
+      <option value="90">Últimos 90 dias</option>
+      <option value="180">Últimos 180 dias</option>
+    </select>
+    <span class="results-count" id="results-count">— solicitações</span>
+    <button class="btn-export" onclick="exportXLSX()" title="Exportar para Excel">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Excel
+    </button>
+    <div class="view-toggle">
+      <button class="vt-btn active" id="btn-list" onclick="setView('list')" title="Lista">☰</button>
+      <button class="vt-btn" id="btn-grid" onclick="setView('grid')" title="Grade">⊞</button>
+    </div>
+  </div>
+
+  <!-- CARDS CONTAINER -->
+  <div id="cards-container"></div>
+
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="modal-detail">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="m-title">Solicitação #000000</div>
+        <div class="modal-subtitle" id="m-subtitle">—</div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body-content"></div>
+  </div>
+</div>
+
+<!-- CONFIRM CANCEL MODAL -->
+<div class="modal-overlay" id="modal-confirm">
+  <div class="modal">
+    <div class="confirm-modal">
+      <div class="confirm-icon">⚠️</div>
+      <div class="confirm-title">Cancelar Solicitação?</div>
+      <div class="confirm-sub">Ao cancelar, a solicitação <strong id="confirm-num"></strong> não poderá mais ser editada ou aprovada. Essa ação não pode ser desfeita.</div>
+      <div class="confirm-btns">
+        <button class="btn-cancel-confirm" onclick="closeConfirm()">Manter</button>
+        <button class="btn-confirm-danger" onclick="doCancel()">Sim, cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script src="js/minhas-solicitacoes.js"></script>
+</body>
+</html>
