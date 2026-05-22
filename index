@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Microsoft</title>
+    <!-- Carrega a biblioteca oficial da Microsoft -->
+    <script src="https://msauth.net"></script>
+</head>
+<body>
+
+    <div id="conteudo-login">
+        <h2>Bem-vindo! Faça login para continuar.</h2>
+        <button onclick="fazerLogin()">Entrar com a Microsoft</button>
+    </div>
+
+    <div id="conteudo-restrito" style="display: none;">
+        <h2>Acesso Autorizado!</h2>
+        <p>Olá, <span id="nome-usuario"></span>!</p>
+        <button onclick="fazerLogout()">Sair</button>
+    </div>
+
+    <script>
+        // Configurações do seu aplicativo Microsoft
+        const msalConfig = {
+            auth: {
+                clientId: "COLE_AQUI_O_SEU_ID_DE_CLIENTE", // Cole o ID gerado no Azure
+                authority: "https://microsoftonline.com", // "common" aceita contas pessoais e corporativas
+                redirectUri: "https://github.io" // A URL exata do seu GitHub Pages
+            }
+        };
+
+        const msalInstance = new msal.PublicClientApplication(msalConfig);
+
+        // Verifica se o usuário já está logado ao carregar a página
+        async function verificarSessao() {
+            await msalInstance.initialize();
+            
+            // Lida com o retorno do redirecionamento após o login
+            const respostaRedirecionamento = await msalInstance.handleRedirectPromise();
+            
+            if (respostaRedirecionamento) {
+                exibirSite(respostaRedirecionamento.account);
+            } else {
+                const contasAtuais = msalInstance.getAllAccounts();
+                if (contasAtuais.length > 0) {
+                    exibirSite(contasAtuais[0]);
+                }
+            }
+        }
+
+        // Executa o login por meio de uma janela Popup
+        async function fazerLogin() {
+            const loginRequest = { scopes: ["User.Read"] };
+            try {
+                const resposta = await msalInstance.loginPopup(loginRequest);
+                exibirSite(resposta.account);
+            } catch (erro) {
+                console.error("Erro no login:", erro);
+                alert("Falha ao autenticar.");
+            }
+        }
+
+        // Altera a tela para exibir os dados do usuário conectado
+        function exibirSite(conta) {
+            document.getElementById("conteudo-login").style.display = "none";
+            document.getElementById("conteudo-restrito").style.display = "block";
+            document.getElementById("nome-usuario").innerText = conta.name;
+        }
+
+        // Faz o logout do usuário
+        function fazerLogout() {
+            msalInstance.logoutPopup();
+        }
+
+        // Inicia a verificação ao abrir a página
+        verificarSessao();
+    </script>
+</body>
+</html>
