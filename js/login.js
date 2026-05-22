@@ -16,8 +16,8 @@
 //
 // ════════════════════════════════════════════════════════════════════════════
 var AZURE = {
-  CLIENT_ID:    'SEU_CLIENT_ID_AQUI',     // ← colar Application (client) ID
-  TENANT_ID:    'SEU_TENANT_ID_AQUI',     // ← colar Directory (tenant) ID
+  CLIENT_ID:    'b0b6f9b5-b3e8-4bde-b227-737bd25e9292',     // ← colar Application (client) ID
+  TENANT_ID:    '4dc4d0a1-44be-4266-973a-d142314830f7',     // ← colar Directory (tenant) ID
   REDIRECT_URI: window.location.origin + window.location.pathname,  // ajuste se necessário
 };
 // ════════════════════════════════════════════════════════════════════════════
